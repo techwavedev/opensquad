@@ -2,14 +2,18 @@
 // All paths relative to /assets/ in public/
 
 // --- Characters ---
-// Named characters have: blink, talk, 1wave, 2wave
-// NPCs have: blink, talk, wave
-export const CHARACTER_NAMES = [
-  'Jesse', 'Riley', 'Rose', 'Tanya',
-  'NPCE1', 'NPCE2', 'NPCE3', 'NPCE4', 'NPCE5', 'NPCE6', 'NPCE7',
-] as const;
+export const MALE_CHARACTERS   = ['Male1', 'Male2', 'Male3', 'Male4'] as const;
+export const FEMALE_CHARACTERS = ['Female1', 'Female2', 'Female3', 'Female4', 'Female5', 'Female6'] as const;
 
-export type CharacterName = typeof CHARACTER_NAMES[number];
+export type CharacterName =
+  | typeof MALE_CHARACTERS[number]
+  | typeof FEMALE_CHARACTERS[number];
+
+// Combined array for preloading all sprites
+export const CHARACTER_NAMES = [...MALE_CHARACTERS, ...FEMALE_CHARACTERS] as const;
+
+// Characters with only a single wave frame (no _1wave/_2wave variants)
+const SINGLE_WAVE = new Set<CharacterName>(['Male3', 'Male4', 'Female3', 'Female4', 'Female5', 'Female6']);
 
 // Returns the asset keys for a character's animation frames
 export function avatarKeys(name: CharacterName) {
@@ -21,19 +25,9 @@ export function avatarKeys(name: CharacterName) {
   };
 }
 
-// Returns the file path for a character sprite
 export function avatarPath(name: CharacterName, pose: string): string {
-  // Named characters use _1wave/_2wave, NPCs use _wave (single frame)
-  if (pose === 'wave1') {
-    return name.startsWith('NPCE')
-      ? `assets/avatars/${name}_wave.png`
-      : `assets/avatars/${name}_1wave.png`;
-  }
-  if (pose === 'wave2') {
-    return name.startsWith('NPCE')
-      ? `assets/avatars/${name}_wave.png`  // NPCs reuse same frame
-      : `assets/avatars/${name}_2wave.png`;
-  }
+  if (pose === 'wave1') return SINGLE_WAVE.has(name) ? `assets/avatars/${name}_wave.png` : `assets/avatars/${name}_1wave.png`;
+  if (pose === 'wave2') return SINGLE_WAVE.has(name) ? `assets/avatars/${name}_wave.png` : `assets/avatars/${name}_2wave.png`;
   return `assets/avatars/${name}_${pose}.png`;
 }
 
