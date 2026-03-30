@@ -97,14 +97,17 @@ Do NOT ask the user about tools. Instead:
 
 ---
 
-### Step 5 — Investigation (ONLY when domain = `content` AND user mentioned reference profiles or examples)
+### Step 5 — Investigation (optional)
 
-This step is skipped entirely for non-content domains, or if the user never mentioned profiles, channels, or reference URLs.
+Offer the investigation option to the user. The investigation is powerful but consumes tokens and time — make the trade-off clear:
 
-If the user mentioned reference profiles or examples during Step 1 or Step 3, ask:
-> "Do you have specific profiles or channels you'd like me to investigate? I can analyze their real content to extract patterns, hooks, structures, and engagement data to make your squad much smarter.
+> "Want to investigate reference profiles before building the squad? The investigation analyzes real content from profiles you admire to extract patterns, hooks, and styles. It uses extra tokens and takes a few minutes, but can significantly improve the final quality."
 >
-> Share 1–5 URLs (Instagram, YouTube, Twitter/X, LinkedIn) or type 'skip'."
+> 1. Yes, investigate profiles
+> 2. No, continue without investigation
+
+If "Yes", ask for URLs:
+> "Share 1–5 URLs of profiles you'd like me to analyze (Instagram, YouTube, Twitter/X, LinkedIn)."
 
 **If the user provides URLs:**
 
@@ -255,7 +258,7 @@ The `squad_code` must be a short, URL-safe slug derived from the squad's purpose
 - **NEVER ask more than 8 questions total** — respect the user's time
 - **NEVER ask about tools** — auto-detect from installed skills and include in the summary
 - **NEVER ask about performance mode** — squads are always built lean and agile
-- **Investigation is content-only** — Step 5 is skipped entirely for research, automation, and analysis domains
+- **Investigation is always offered** — Step 5 presents the option for all domains, not just content
 - **Target formats are content-only** — Step 6 is skipped entirely for non-content squads
 - **One question at a time** — never combine two questions in one message, even if they feel related
 - **Domain detection is silent** — do not announce "I detected your domain is X"; just use the classification internally
